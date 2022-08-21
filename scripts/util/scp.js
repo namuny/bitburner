@@ -1,5 +1,6 @@
 const SCRIPT = '/scripts/simple_hack/joesguns.js';
 
+/** @param {NS} ns */
 export async function main(ns) {
 	var visited = new Set();
 	var targets = await ns.scan('home');
