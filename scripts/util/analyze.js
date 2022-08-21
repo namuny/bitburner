@@ -43,5 +43,6 @@ async function recurse(ns, target, paths, visited) {
 		}
 		var newPaths = [...paths, target];
 		recurse(ns, neighbour, newPaths, visited)
+		await ns.connect(target);
 	}
 }
