@@ -24,14 +24,20 @@ export async function main(ns) {
         }
 
         // If on to the next RAM, Delete a server with old ram
+        var deletedServer = false;
         if (ramPurchase == NEXT_RAM) {
             for (var purchasedServer of purchasedServers) {
                 if (ns.getServerMaxRam(purchasedServer) == RAM) {
-                    await ns.killall(purchaseServer);
-                    await ns.deleteServer(purchaseServer);
+                    await ns.killall(purchasedServer);
+                    deletedServer = await ns.deleteServer(purchasedServer);
                     break;
                 }
             }
+        }
+
+        // If there are still no server capacity left at this point and we haven't deleted any servers, we've reached the end.
+        if (await ns.getPurchasedServerLimit() - purchasedServers.length <= 0 && !deletedServer) {
+            continue;
         }
 
         // Purchase server
