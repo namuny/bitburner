@@ -1,6 +1,6 @@
 const RAM = 8192;
 const SCRIPT_FILE = '/scripts/hack/hack.js';
-const SLEEP_TIME_MILLIS = 60000;
+const SLEEP_TIME_MILLIS = 10000;
 const SERVER_NAME_PREFIX = 'namuny';
 
 /** @param {NS} ns */

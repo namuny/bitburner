@@ -12,6 +12,7 @@ export async function main(ns) {
         var serverRam = ns.getServerMaxRam(server);
         if (serverRam < RAM) {
             ns.tprint(`Deleting server ${server} because RAM of ${serverRam} is below specified threshold ${RAM}`);
+            ns.killall(server);
             ns.deleteServer(server);
         }
     }
