@@ -6,7 +6,7 @@
  * 5. Run hack script with the highest thread count
  */
 
-const NUM_OPEN_PORTS = 2;
+const NUM_OPEN_PORTS = 3;
 const SCRIPT = '/scripts/hack/hack.js';
 
 /** @param {NS} ns */
