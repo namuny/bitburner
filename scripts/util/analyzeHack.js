@@ -1,6 +1,13 @@
+/**
+ * 1. Use DFS to traverse the server network
+ * 2. Open all ports
+ * 3. Kill all running scripts
+ * 4. Move hack script
+ * 5. Run hack script with the highest thread count
+ */
+
 const NUM_OPEN_PORTS = 2;
 const SCRIPT = '/scripts/hack/hack.js';
-const SLEEP_MILLIS = 1000;
 
 /** @param {NS} ns */
 export async function main(ns) {
