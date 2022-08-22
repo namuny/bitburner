@@ -1,4 +1,4 @@
-const SCRIPT = '/scripts/simple_hack/joesguns.js';
+const SCRIPT = '/scripts/hack/hack.js';
 
 /** @param {NS} ns */
 export async function main(ns) {
