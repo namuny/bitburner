@@ -6,7 +6,7 @@
  * 5. Run hack script with the highest thread count
  */
 
-const NUM_OPEN_PORTS = 3;
+const NUM_OPEN_PORTS = 5;
 const SCRIPT = '/scripts/hack/hack.js';
 
 /** @param {NS} ns */
@@ -38,6 +38,8 @@ async function recurse(ns, target, visited, scriptRam) {
 	ns.brutessh(target);
 	ns.ftpcrack(target);
 	ns.relaysmtp(target);
+	ns.httpworm(target);
+	ns.sqlinject(target);
 	ns.nuke(target);
 
 	ns.killall(target);
