@@ -33,8 +33,8 @@ async function recurse(ns, target, paths, visited) {
 	await ns.ftpcrack(target);
 	await ns.relaysmtp(target);
 	await ns.nuke(target);
-	await ns.connect(target);
-	await ns.installBackdoor();
+	// await ns.connect(target);
+	// await ns.installBackdoor();
 	visited.add(target);
 	
 	var neighbours = await ns.scan(target);
@@ -44,6 +44,6 @@ async function recurse(ns, target, paths, visited) {
 		}
 		var newPaths = [...paths, target];
 		recurse(ns, neighbour, newPaths, visited)
-		await ns.connect(target);
+		// await ns.connect(target);
 	}
 }
