@@ -14,8 +14,6 @@ export async function main(ns) {
 		var numThreads = Math.floor(serverRam / scriptRam);
 
 		await ns.connect(target);
-		
-		// Run script concurrently
 		await ns.run(FILE, numThreads);
 	}
 }
