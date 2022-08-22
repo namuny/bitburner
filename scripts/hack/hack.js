@@ -1,4 +1,4 @@
-const TARGET = 'iron-gym';
+const TARGET = 'joesguns';
 
 export async function main(ns) {
     const SECURITY_THRESHOLD = ns.getServerMinSecurityLevel(TARGET) + 5;
