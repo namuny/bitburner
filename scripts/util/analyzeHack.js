@@ -17,21 +17,17 @@ export async function main(ns) {
 	visited.add('home');
 
 	for (var target of targets) {
-		var neighbours = ns.scan(target);
-
-		for (var neighbour of neighbours) {
-			await recurse(ns, neighbour, ['home'], visited, scriptRam);
-		}
+		await recurse(ns, target, visited, scriptRam);
 	}
 }
 
 /** @param {NS} ns */
-async function recurse(ns, target, paths, visited, scriptRam) {
+async function recurse(ns, target, visited, scriptRam) {
 	if (visited.has(target)) {
 		return;
 	}
 
-	if (ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
+	if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
 		return;
 	}
 
@@ -55,8 +51,6 @@ async function recurse(ns, target, paths, visited, scriptRam) {
 		ns.exec(SCRIPT, target, numThreads);
 	}
 
-	// await ns.connect(target);
-	// await ns.installBackdoor();
 	visited.add(target);
 	
 	var neighbours = ns.scan(target);
@@ -64,8 +58,6 @@ async function recurse(ns, target, paths, visited, scriptRam) {
 		if (visited.has(neighbour)) {
 			continue;
 		}
-		var newPaths = [...paths, target];
-		recurse(ns, neighbour, newPaths, visited, scriptRam)
-		// await ns.connect(target);
+		recurse(ns, neighbour, visited, scriptRam)
 	}
 }
