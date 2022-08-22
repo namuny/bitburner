@@ -27,7 +27,7 @@ export async function main(ns) {
         var deletedServer = false;
         if (ramPurchase == NEXT_RAM) {
             for (var purchasedServer of purchasedServers) {
-                if (ns.getServerMaxRam(purchasedServer) == RAM) {
+                if (ns.getServerMaxRam(purchasedServer) <= RAM) {
                     await ns.killall(purchasedServer);
                     deletedServer = await ns.deleteServer(purchasedServer);
                     break;
