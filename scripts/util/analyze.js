@@ -31,6 +31,7 @@ async function recurse(ns, target, paths, visited) {
 
 	await ns.brutessh(target);
 	await ns.ftpcrack(target);
+	await ns.relaysmtp(target);
 	await ns.nuke(target);
 	await ns.connect(target);
 	await ns.installBackdoor();
