@@ -1,4 +1,5 @@
 const RAM = 16384;
+const NEXT_RAM = 131072;
 const SCRIPT_FILE = '/scripts/hack/hack.js';
 const SLEEP_TIME_MILLIS = 10000;
 const SERVER_NAME_PREFIX = 'namuny';
@@ -7,28 +8,40 @@ const SERVER_NAME_PREFIX = 'namuny';
 export async function main(ns) {
     while(true) {
         await ns.sleep(SLEEP_TIME_MILLIS);
+        
         const purchasedServers = await ns.getPurchasedServers();
 
         ns.print(`Purchased server count: ${purchasedServers.length}`);
 
-        // If no available server space, sleep 60 seconds
+        var ramPurchase = RAM;
         if (await ns.getPurchasedServerLimit() - purchasedServers.length <= 0) {
-            continue;
+            ramPurchase = NEXT_RAM;
         }
 
         // If no money for ram, sleep 60 seconds
-        if (await ns.getPurchasedServerCost(RAM) > await ns.getServerMoneyAvailable('home')) {
+        if (await ns.getPurchasedServerCost(ramPurchase) > await ns.getServerMoneyAvailable('home')) {
             continue;
+        }
+
+        // If on to the next RAM, Delete a server with old ram
+        if (ramPurchase == NEXT_RAM) {
+            for (var purchasedServer of purchasedServers) {
+                if (ns.getServerMaxRam(purchasedServer) == RAM) {
+                    await ns.killall(purchaseServer);
+                    await ns.deleteServer(purchaseServer);
+                    break;
+                }
+            }
         }
 
         // Purchase server
         const serverName = SERVER_NAME_PREFIX + Date.now();
-        const actualServerName = await ns.purchaseServer(serverName, RAM);
+        const actualServerName = await ns.purchaseServer(serverName, ramPurchase);
 
         // Run scp script
         await ns.scp(SCRIPT_FILE, actualServerName, 'home');
 
         // Execute
-        await ns.exec(SCRIPT_FILE, actualServerName, Math.floor(RAM / ns.getScriptRam(SCRIPT_FILE)));
+        await ns.exec(SCRIPT_FILE, actualServerName, Math.floor(ramPurchase / ns.getScriptRam(SCRIPT_FILE)));
     }
 }
