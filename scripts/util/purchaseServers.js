@@ -22,7 +22,7 @@ export async function main(ns) {
         }
 
         // Purchase server
-        const serverName = SERVER_NAME_PREFIX + purchasedServers.length;
+        const serverName = SERVER_NAME_PREFIX + Date.now();
         const actualServerName = await ns.purchaseServer(serverName, RAM);
 
         // Run scp script
