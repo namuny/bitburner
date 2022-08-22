@@ -2,6 +2,7 @@ const RAM = 8192;
 const SCRIPT_FILE = '/scripts/simple_hack/joesguns.js';
 const SCP_FILE = '/scripts/util/scp.js';
 const SLEEP_TIME_MILLIS = 60000;
+const SCP_SLEEP_TIME_MILLIS = 10000;
 const SERVER_NAME_PREFIX = 'namuny';
 
 /** @param {NS} ns */
@@ -28,6 +29,8 @@ export async function main(ns) {
 
         // Run scp script
         await ns.exec(SCP_FILE, 'home');
+
+        await ns.sleep(SCP_SLEEP_TIME_MILLIS);
 
         // Execute
         await ns.exec(SCRIPT_FILE, actualServerName, Math.floor(RAM / ns.getScriptRam(SCRIPT_FILE)));
