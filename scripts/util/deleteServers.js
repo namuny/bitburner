@@ -2,7 +2,7 @@
  * Delete servers that are below the specified RAM
  */
 
-const RAM = 8192;
+const RAM = 16384;
 
 /** @param {NS} ns */
 export async function main(ns) {
