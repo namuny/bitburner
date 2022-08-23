@@ -1,27 +1,28 @@
 /**
- * Return total RAM available on all servers with root access
+ * Return total threads available on all servers with root access
  */
 
  const NUM_OPEN_PORTS = 5;
 
 /** @param {NS} ns */
 export async function main(ns) {
-    var totalRAM = 0;
+	var scriptRAM = ns.args[0];
+    var totalThreads = 0;
 	var visited = new Set();
 	var targets = ns.scan('home');
 	visited.add('home');
 
 	for (var target of targets) {
-		totalRAM = totalRAM + await recurse(ns, target, visited);
+		totalThreads = totalThreads + await recurse(ns, target, visited, scriptRAM);
 	}
 
-	ns.tprint(totalRAM);
+	ns.tprint(totalThreads);
 
-	return totalRAM;
+	return totalThreads;
 }
 
 /** @param {NS} ns */
-async function recurse(ns, target, visited) {
+async function recurse(ns, target, visited, scriptRAM) {
 	if (visited.has(target)) {
 		return 0;
 	}
@@ -36,14 +37,15 @@ async function recurse(ns, target, visited) {
 
 	visited.add(target);
 	
-	var serverRAM = await ns.getServerMaxRam(target);
+	var maxRAM = await ns.getServerMaxRam(target);
+	var threads = Math.floor(maxRAM / scriptRAM);
 	var neighbours = ns.scan(target);
 	for (var neighbour of neighbours) {
 		if (visited.has(neighbour)) {
 			continue;
 		}
-		serverRAM = serverRAM + await recurse(ns, neighbour, visited);
+		threads = threads + await recurse(ns, neighbour, visited, scriptRAM);
 	}
 
-	return serverRAM;
+	return threads;
 }
