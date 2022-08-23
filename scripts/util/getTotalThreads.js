@@ -5,8 +5,7 @@
  const NUM_OPEN_PORTS = 5;
 
 /** @param {NS} ns */
-export async function main(ns) {
-	var scriptRAM = ns.args[0];
+export async function getTotalThreads(ns, scriptRAM) {
     var totalThreads = 0;
 	var visited = new Set();
 	var targets = ns.scan('home');

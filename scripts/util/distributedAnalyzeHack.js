@@ -1,6 +1,6 @@
-import { findOptimalServers } from './findOptimalServers';
-import { analyzeHack } from './analyzeHack';
-import { getTotalThreads } from './getTotalThreads';
+import { findOptimalServers } from '/scripts/util/findOptimalServers.js';
+import * as analyzeHack from '/scripts/util/analyzeHack';
+import { getTotalThreads } from '/scripts/util/getTotalThreads';
 
 /**
  * 1. Find all viable servers and their max money
@@ -15,13 +15,18 @@ const SCRIPT = '/scripts/hack/hack.js';
 /** @param {NS} ns */
 export async function main(ns) {
 	var scriptRAM = ns.getScriptRam(SCRIPT);
-	var totalRAM = await getTotalThreads(scriptRAM);
-	var optimalServers = await findOptimalServers();
-	var totalThreads = Math.floor(totalRAM / scriptRAM);
+	var totalThreads = await getTotalThreads(ns, scriptRAM);
+	var optimalServers = await findOptimalServers(ns);
 	
 	// Total money
+	var totalMoney = 0;
+	for (var server of optimalServers) {
+		totalMoney += server.maxMoney;
+	}
 
-	// Total number of threads
+	ns.tprint(`totalThreads: ${totalThreads}`);
+	ns.tprint(`totalMoney: ${totalMoney}`);
+
 
 	// 3
 

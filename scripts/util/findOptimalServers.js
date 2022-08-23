@@ -7,7 +7,7 @@
 var TARGET_SERVERS = [];
 
 /** @param {NS} ns */
-export async function main(ns) {
+export async function findOptimalServers(ns) {
 	var visited = new Set();
 	var targets = ns.scan('home');
 	visited.add('home');
