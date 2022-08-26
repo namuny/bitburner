@@ -1,5 +1,5 @@
 import { findOptimalServers } from '/scripts/util/findOptimalServers.js';
-import { targetHack } from '/scripts/util/targetHack';
+import { distributedHack } from '/scripts/util/distributedHack';
 import { getTotalThreads } from '/scripts/util/getTotalThreads';
 
 /**
@@ -15,7 +15,7 @@ const SCRIPT = '/scripts/hack/hack.js';
 export async function main(ns) {
 	var scriptRAM = ns.getScriptRam(SCRIPT);
 	var totalThreads = await getTotalThreads(ns, scriptRAM);
-	var optimalServers = await findOptimalServers(ns);
+	var optimalServers = await findOptimalServers(ns, scriptRAM);
 	
 	// Total money
 	var totalMoney = 0;
@@ -28,10 +28,18 @@ export async function main(ns) {
 
 	var moneyPerThread = totalMoney / totalThreads;
 
-	// TODO Get server to thread count mapping
-	// TODO Get total thread count from the above
-	// TODO Call targetHack script with source server and target server and thread count
-	// TODO ...
+	var targetServerToThreads = [];
 
-	
+	for (server of optimalServers) {
+		var targetServerToThread = {
+			...server,
+			allocatedThreadCount: Math.floor(server.maxMoney / moneyPerThread)
+		};
+
+		ns.tprint(`Allocated ${targetServerToThread.allocatedThreadCount} threads to ${server.name}`);
+
+		targetServerToThreads.push(targetServerToThread);
+	}
+
+	await distributedHack(ns, targetServerToThreads);
 }

@@ -25,6 +25,10 @@ export async function findOptimalServers(ns, scriptRam) {
 
 /** @param {NS} ns */
 async function recurse(ns, target, visited, scriptRam) {
+	if (target.startsWith('namuny')) {
+		return;
+	}
+
 	if (visited.has(target)) {
 		return;
 	}

@@ -1,6 +1,6 @@
 const TARGET = 'joesguns';
 
-export async function main(ns) {
+export async function targetHack(ns) {
     const SECURITY_THRESHOLD = ns.getServerMinSecurityLevel(TARGET) + 5;
     const MONEY_THRESHOLD = ns.getServerMaxMoney(TARGET) * 0.75;
 

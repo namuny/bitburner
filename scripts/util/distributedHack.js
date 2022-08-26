@@ -1,16 +1,8 @@
-/**
- * 1. Use DFS to traverse the server network
- * 2. Open all ports
- * 3. Kill all running scripts
- * 4. Move hack script
- * 5. Run hack script with the highest thread count
- */
-
 const NUM_OPEN_PORTS = 5;
-const SCRIPT = '/scripts/hack/hack.js';
+const SCRIPT = '/scripts/hack/targetHack.js';
 
 /** @param {NS} ns */
-export async function targetHack(ns, optimalServers) {
+export async function distributedHack(ns, optimalServers) {
 	var scriptRam = ns.getScriptRam(SCRIPT);
 	var visited = new Set();
 	var targets = ns.scan('home');
@@ -48,9 +40,35 @@ async function recurse(ns, target, visited, scriptRam, optimalServers) {
 
 	var serverRam = ns.getServerMaxRam(target);
 	var numThreads = Math.floor(serverRam / scriptRam);
-	
-	if (numThreads > 0) {
-		ns.exec(SCRIPT, target, numThreads);
+	var shouldExit = false;
+
+	while(numThreads > 0 && !shouldExit) {
+		if (optimalServers.filter(s => s.allocatedThreadCount > 0).length == 0) {
+			break;
+		}
+
+		for (var optimalServer of optimalServers) {
+			if (numThreads <= 0) {
+				break;
+			}
+
+			var threadsToAllocate = Math.min(optimalServer.allocatedThreadCount, numThreads);
+
+			if (threadsToAllocate <= 0) {
+				continue;
+			}
+
+			ns.tprint(`[${target}]: Allocating ${threadsToAllocate} threads to attack ${optimalServer.name}`);
+			ns.exec(SCRIPT, target, threadsToAllocate, optimalServer.name);
+
+			numThreads -= threadsToAllocate;
+			optimalServer.allocatedThreadCount -= threadsToAllocate;
+
+			// Reached the end
+			if (optimalServers[optimalServers.length - 1] == optimalServer) {
+				shouldExit = true;
+			}
+		}
 	}
 
 	visited.add(target);
@@ -60,6 +78,6 @@ async function recurse(ns, target, visited, scriptRam, optimalServers) {
 		if (visited.has(neighbour)) {
 			continue;
 		}
-		recurse(ns, neighbour, visited, scriptRam)
+		recurse(ns, neighbour, visited, scriptRam, optimalServers)
 	}
 }
