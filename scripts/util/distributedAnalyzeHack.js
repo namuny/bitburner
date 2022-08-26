@@ -1,5 +1,5 @@
 import { findOptimalServers } from '/scripts/util/findOptimalServers.js';
-import * as analyzeHack from '/scripts/util/analyzeHack';
+import { targetHack } from '/scripts/util/targetHack';
 import { getTotalThreads } from '/scripts/util/getTotalThreads';
 
 /**
@@ -9,7 +9,6 @@ import { getTotalThreads } from '/scripts/util/getTotalThreads';
  * 4. Run
  */
 
-const NUM_OPEN_PORTS = 5;
 const SCRIPT = '/scripts/hack/hack.js';
 
 /** @param {NS} ns */
@@ -27,9 +26,20 @@ export async function main(ns) {
 	ns.tprint(`totalThreads: ${totalThreads}`);
 	ns.tprint(`totalMoney: ${totalMoney}`);
 
+	var moneyPerThread = totalMoney / totalThreads;
 
-	// 3
+	// TODO Get server to thread count mapping
+	// TODO Get total thread count from the above
+	// TODO Call targetHack script with source server and target server and thread count
+	// TODO ...
 
+	for (var server of optimalServers) {
+		var threads = Math.floor(server.maxMoney / moneyPerThread);
+		if (threads <= 0) {
+			continue;
+		}
 
-	// 4
+		ns.tprint(`Server: ${server.name}, maxMoney: ${server.maxMoney}, threads: ${threads}`);
+		analyzeHack(ns)
+	}
 }
