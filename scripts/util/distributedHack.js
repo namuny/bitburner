@@ -19,19 +19,30 @@ async function recurse(ns, target, visited, scriptRam, optimalServers) {
 		return;
 	}
 
-	if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
-		return;
+	if (ns.fileExists("BruteSSH.exe")) {
+		ns.brutessh(target);
+	}
+	
+	if (ns.fileExists("BruteSSH.exe")) {
+		ns.brutessh(target);
+	}
+	
+	if (ns.fileExists("FTPCrack.exe")) {
+		ns.ftpcrack(target);
 	}
 
-	if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel()) {
-		return;
+	if (ns.fileExists("relaySMTP.exe")) {
+		ns.relaysmtp(target);
 	}
 
-	ns.brutessh(target);
-	ns.ftpcrack(target);
-	ns.relaysmtp(target);
-	ns.httpworm(target);
-	ns.sqlinject(target);
+	if (ns.fileExists("HTTPWorm.exe")) {
+		ns.httpworm(target);
+	}
+
+	if (ns.fileExists("SQLInject.exe")) {
+		ns.sqlinject(target);	
+	}
+	
 	ns.nuke(target);
 
 	ns.killall(target);
@@ -42,31 +53,33 @@ async function recurse(ns, target, visited, scriptRam, optimalServers) {
 	var numThreads = Math.floor(serverRam / scriptRam);
 	var shouldExit = false;
 
-	while(numThreads > 0 && !shouldExit) {
-		if (optimalServers.filter(s => s.allocatedThreadCount > 0).length == 0) {
-			break;
-		}
-
-		for (var optimalServer of optimalServers) {
-			if (numThreads <= 0) {
+	if ((ns.hasRootAccess(target) && ns.getServerRequiredHackingLevel(target) <= ns.getHackingLevel())) {
+		while(numThreads > 0 && !shouldExit) {
+			if (optimalServers.filter(s => s.allocatedThreadCount > 0).length == 0) {
 				break;
 			}
 
-			var threadsToAllocate = Math.min(optimalServer.allocatedThreadCount, numThreads);
+			for (var optimalServer of optimalServers) {
+				if (numThreads <= 0) {
+					break;
+				}
 
-			if (threadsToAllocate <= 0) {
-				continue;
-			}
+				var threadsToAllocate = Math.min(optimalServer.allocatedThreadCount, numThreads);
 
-			ns.tprint(`[${target}]: Allocating ${threadsToAllocate} threads to attack ${optimalServer.name}`);
-			ns.exec(SCRIPT, target, threadsToAllocate, optimalServer.name);
+				if (threadsToAllocate <= 0) {
+					continue;
+				}
 
-			numThreads -= threadsToAllocate;
-			optimalServer.allocatedThreadCount -= threadsToAllocate;
+				ns.tprint(`[${target}]: Allocating ${threadsToAllocate} threads to attack ${optimalServer.name}`);
+				ns.exec(SCRIPT, target, threadsToAllocate, optimalServer.name);
 
-			// Reached the end
-			if (optimalServers[optimalServers.length - 1] == optimalServer) {
-				shouldExit = true;
+				numThreads -= threadsToAllocate;
+				optimalServer.allocatedThreadCount -= threadsToAllocate;
+
+				// Reached the end
+				if (optimalServers[optimalServers.length - 1] == optimalServer) {
+					shouldExit = true;
+				}
 			}
 		}
 	}

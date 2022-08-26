@@ -15,6 +15,8 @@
 	 var visited = new Set();
 	 var targets = ns.scan('home');
 	 visited.add('home');
+
+	 
  
 	 for (var target of targets) {
 		 await recurse(ns, target, visited, scriptRam);
@@ -27,21 +29,35 @@
 		 return;
 	 }
  
-	 if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
-		 return;
-	 }
- 
-	 if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel()) {
-		 return;
-	 }
- 
-	 ns.brutessh(target);
-	 ns.ftpcrack(target);
-	 ns.relaysmtp(target);
-	 ns.httpworm(target);
-	 ns.sqlinject(target);
+	if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
+		return;
+	}
+
+	if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel()) {
+		return;
+	}
+
+	if (ns.fileExists("BruteSSH.exe")) {
+		ns.brutessh(target);
+	}
+	
+	if (ns.fileExists("FTPCrack.exe")) {
+		ns.ftpcrack(target);
+	}
+
+	if (ns.fileExists("relaySMTP.exe")) {
+		ns.relaysmtp(target);
+	}
+
+	if (ns.fileExists("HTTPWorm.exe")) {
+		ns.httpworm(target);
+	}
+
+	if (ns.fileExists("SQLInject.exe")) {
+		ns.sqlinject(target);	
+	}
+	 
 	 ns.nuke(target);
- 
 	 ns.killall(target);
  
 	 await ns.scp(SCRIPT, target, 'home');

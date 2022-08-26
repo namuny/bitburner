@@ -1,5 +1,7 @@
-const RAM = 131072;
-const NEXT_RAM = 1048576;
+// Highest RAM from last augmentation: 1048576
+
+const RAM = 8;
+const NEXT_RAM = 64;
 const SCRIPT_FILE = '/scripts/hack/hack.js';
 const SLEEP_TIME_MILLIS = 10000;
 const SERVER_NAME_PREFIX = 'namuny';
