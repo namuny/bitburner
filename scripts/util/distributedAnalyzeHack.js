@@ -33,13 +33,5 @@ export async function main(ns) {
 	// TODO Call targetHack script with source server and target server and thread count
 	// TODO ...
 
-	for (var server of optimalServers) {
-		var threads = Math.floor(server.maxMoney / moneyPerThread);
-		if (threads <= 0) {
-			continue;
-		}
-
-		ns.tprint(`Server: ${server.name}, maxMoney: ${server.maxMoney}, threads: ${threads}`);
-		analyzeHack(ns)
-	}
+	
 }

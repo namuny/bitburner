@@ -7,13 +7,13 @@
 var TARGET_SERVERS = [];
 
 /** @param {NS} ns */
-export async function findOptimalServers(ns) {
+export async function findOptimalServers(ns, scriptRam) {
 	var visited = new Set();
 	var targets = ns.scan('home');
 	visited.add('home');
 
 	for (var target of targets) {
-		await recurse(ns, target, visited);
+		await recurse(ns, target, visited, scriptRam);
 	}
 
 	TARGET_SERVERS.sort((a, b) => a.maxMoney - b.maxMoney);
@@ -24,7 +24,7 @@ export async function findOptimalServers(ns) {
 }
 
 /** @param {NS} ns */
-async function recurse(ns, target, visited) {
+async function recurse(ns, target, visited, scriptRam) {
 	if (visited.has(target)) {
 		return;
 	}
@@ -38,10 +38,18 @@ async function recurse(ns, target, visited) {
 	}
 
 	var maxMoney = ns.getServerMaxMoney(target);
+	var maxRam = ns.getServerMaxRam(target);
+	var threadCount = Math.floor(maxRam / scriptRam);
+
+	if (threadCount <= 0) {
+		return;
+	}
 
 	TARGET_SERVERS.push({
 		name: target,
-		maxMoney: maxMoney
+		maxMoney: maxMoney,
+		maxRam: maxRam,
+		threadCount: threadCount
 	});
 
 	visited.add(target);
@@ -51,6 +59,6 @@ async function recurse(ns, target, visited) {
 		if (visited.has(neighbour)) {
 			continue;
 		}
-		recurse(ns, neighbour, visited);
+		recurse(ns, neighbour, visited, scriptRam);
 	}
 }

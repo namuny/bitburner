@@ -10,19 +10,19 @@ const NUM_OPEN_PORTS = 5;
 const SCRIPT = '/scripts/hack/hack.js';
 
 /** @param {NS} ns */
-export async function targetHack(ns) {
+export async function targetHack(ns, optimalServers) {
 	var scriptRam = ns.getScriptRam(SCRIPT);
 	var visited = new Set();
 	var targets = ns.scan('home');
 	visited.add('home');
 
 	for (var target of targets) {
-		await recurse(ns, target, visited, scriptRam);
+		await recurse(ns, target, visited, scriptRam, optimalServers);
 	}
 }
 
 /** @param {NS} ns */
-async function recurse(ns, target, visited, scriptRam) {
+async function recurse(ns, target, visited, scriptRam, optimalServers) {
 	if (visited.has(target)) {
 		return;
 	}
