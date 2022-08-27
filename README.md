@@ -6,7 +6,7 @@
 3. Update `scripts/util/purchaseServers.js` and run it on `home`.
 4. Backdoor `CSEC`
 5. Backdoor `avmnite-02h`
-6. 
+6. Backdoor `I.I.I.I`
 
 ## After reaching high hacking level (When all 5 ports are open)
 1. Continue upgrading `scripts/util/purchaseServers.js`

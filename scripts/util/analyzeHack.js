@@ -6,7 +6,7 @@
  * 5. Run hack script with the highest thread count
  */
 
- const NUM_OPEN_PORTS = 4;
+ const NUM_OPEN_PORTS = 5;
  const SCRIPT = '/scripts/hack/hack.js';
  
  /** @param {NS} ns */
@@ -16,8 +16,6 @@
 	 var targets = ns.scan('home');
 	 visited.add('home');
 
-	 
- 
 	 for (var target of targets) {
 		 await recurse(ns, target, visited, scriptRam);
 	 }
@@ -76,6 +74,6 @@
 		 if (visited.has(neighbour)) {
 			 continue;
 		 }
-		 recurse(ns, neighbour, visited, scriptRam)
+		 await recurse(ns, neighbour, visited, scriptRam)
 	 }
  }
