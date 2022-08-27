@@ -12,3 +12,10 @@
 1. Continue upgrading `scripts/util/purchaseServers.js`
 2. Stop `scripts/util/analyzeHack.js`
 3. Run `scripts/util/distributedAnalyzeHack.js`
+
+## TODO
+1. Join Megacorp faction
+2. Join Volhaven faction
+
+## Resources
+* [Factions](https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html)
