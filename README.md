@@ -17,5 +17,16 @@
 1. Join Megacorp faction
 2. Join Volhaven faction
 
+## Factions
+### Factions with augmentations
+* ~~Tian Di Hui~~
+* ~~The Black Hand~~
+* New Tokyo
+* Volhaven
+* Chongqing
+* Sector-12
+* Aevum
+* Ishima
+
 ## Resources
 * [Factions](https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html)
