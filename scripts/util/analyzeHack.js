@@ -29,11 +29,7 @@
  
 	if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
 		return;
-	}
-
-	if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel()) {
-		return;
-	}
+	}j
 
 	if (ns.fileExists("BruteSSH.exe")) {
 		ns.brutessh(target);
@@ -55,17 +51,17 @@
 		ns.sqlinject(target);	
 	}
 	 
-	 ns.nuke(target);
-	 ns.killall(target);
- 
-	 await ns.scp(SCRIPT, target, 'home');
- 
-	 var serverRam = ns.getServerMaxRam(target);
-	 var numThreads = Math.floor(serverRam / scriptRam);
-	 
-	 if (numThreads > 0) {
-		 ns.exec(SCRIPT, target, numThreads);
-	 }
+	ns.nuke(target);
+	ns.killall(target);
+
+	await ns.scp(SCRIPT, target, 'home');
+
+	var serverRam = ns.getServerMaxRam(target);
+	var numThreads = Math.floor(serverRam / scriptRam);
+	
+	if (numThreads > 0) {
+		ns.exec(SCRIPT, target, numThreads);
+	}
  
 	 visited.add(target);
 	 
