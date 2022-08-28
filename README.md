@@ -7,26 +7,31 @@
 4. Backdoor `CSEC`
 5. Backdoor `avmnite-02h`
 6. Backdoor `I.I.I.I`
+7. Backdoor `run4theh111z`
 
 ## After reaching high hacking level (When all 5 ports are open)
 1. Continue upgrading `scripts/util/purchaseServers.js`
 2. Stop `scripts/util/analyzeHack.js`
 3. Run `scripts/util/distributedAnalyzeHack.js`
 
-## TODO
-1. Join Megacorp faction
-2. Join Volhaven faction
+## Factions to buy from
+**City**
+* ~~Volhaven~~
+* ~~Chongqing~~
+* ~~New Tokyo~~
+* ~~Ishima~~
+* ~~New Tokyo~~
+* ~~Sector-12~~
 
-## Factions
-### Factions with augmentations
-* ~~Tian Di Hui~~
+**Hacking groups**
+* BitRunners
+* ~~NiteSec~~
+* ~~CyberSec~~
 * ~~The Black Hand~~
-* New Tokyo
-* Volhaven
-* Chongqing
-* Sector-12
-* Aevum
-* Ishima
+* ~~Tian Di Hui~~
+
+**Company**
+* Megacorp
 
 ## Resources
 * [Factions](https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html)

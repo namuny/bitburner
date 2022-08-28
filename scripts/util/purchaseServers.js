@@ -1,5 +1,8 @@
 // Highest RAM from last augmentation: 1048576
 // 2 GB RAM => $0.11m
+
+// 8192
+// 32768
 const RAM = 1024;
 const NEXT_RAM = 8192;
 const SCRIPT_FILE = '/scripts/hack/hack.js';
