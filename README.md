@@ -16,22 +16,26 @@
 
 ## Factions to buy from
 **City**
-* ~~Volhaven~~
-* ~~Chongqing~~
-* ~~New Tokyo~~
-* ~~Ishima~~
-* ~~New Tokyo~~
-* ~~Sector-12~~
+* Volhaven
+* Chongqing
+* New Tokyo
+* Ishima
+* New Tokyo
+* Sector-12
 
 **Hacking groups**
-* BitRunners
+* ~~BitRunners~~
 * ~~NiteSec~~
 * ~~CyberSec~~
 * ~~The Black Hand~~
-* ~~Tian Di Hui~~
+* Tian Di Hui
+* Daedalus
 
 **Company**
 * Megacorp
+
+## Bitnode
+1.1 -> 1.2
 
 ## Resources
 * [Factions](https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html)

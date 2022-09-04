@@ -5,6 +5,7 @@
  */
 
 var TARGET_SERVERS = [];
+var DIVISION_FACTOR = 3;
 
 /** @param {NS} ns */
 export async function findOptimalServers(ns, scriptRam) {
@@ -37,7 +38,7 @@ async function recurse(ns, target, visited, scriptRam) {
 		return;
 	}
 
-	if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel() / 3) {
+	if (ns.getServerRequiredHackingLevel(target) > ns.getHackingLevel() / DIVISION_FACTOR) {
 		return;
 	}
 

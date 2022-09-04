@@ -29,7 +29,7 @@
  
 	if (!ns.hasRootAccess(target) && ns.getServerNumPortsRequired(target) > NUM_OPEN_PORTS) {
 		return;
-	}j
+	}
 
 	if (ns.fileExists("BruteSSH.exe")) {
 		ns.brutessh(target);
