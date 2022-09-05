@@ -5,7 +5,7 @@
  */
 
 var TARGET_SERVERS = [];
-var DIVISION_FACTOR = 3;
+var DIVISION_FACTOR = 1;
 
 /** @param {NS} ns */
 export async function findOptimalServers(ns, scriptRam) {

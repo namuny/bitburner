@@ -12,8 +12,8 @@
 
 // 1048576
 
-const RAM = 32768;
-const NEXT_RAM = 131072;
+const RAM = 524288;
+const NEXT_RAM = 1048576;
 const SCRIPT_FILE = '/scripts/hack/hack.js';
 const SLEEP_TIME_MILLIS = 10000;
 const SERVER_NAME_PREFIX = 'namuny';
